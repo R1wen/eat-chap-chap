@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+}
+
+// ============================================================
+// 1. TABLES INDÉPENDANTES (Les référentiels)
+// ============================================================
+
+model Client {
+  id_client    Int           @id @default(autoincrement())
+  nom          String        @db.VarChar(100)
+  telephone    String?       @db.VarChar(20)
+  email        String?       @db.VarChar(150)
+  
+  // Relations inverses
+  reservations Reservation[]
+  commandes    Commande[]
+}
+
+model Table_Restaurant {
+  id_table     Int           @id @default(autoincrement())
+  numero       Int           @unique
+  capacite     Int
+  zone         String?       @db.VarChar(50)
+  
+  // Relations Many-to-Many implicites gérées par Prisma
+  reservations Reservation[] 
+  commandes    Commande[]    
+}
+
+model Employe {
+  id_employe   Int           @id @default(autoincrement())
+  nom          String        @db.VarChar(100)
+  prenom       String        @db.VarChar(100)
+  role         String        @db.VarChar(50)
+  
+  commandes    Commande[]
+}
+
+model Categorie {
+  id_categorie Int           @id @default(autoincrement())
+  libelle      String        @db.VarChar(100)
+  
+  plats        Plat[]
+}
+
+// ============================================================
+// 2. TABLES DE NIVEAU 1
+// ============================================================
+
+model Plat {
+  id_plat      Int              @id @default(autoincrement())
+  libelle      String           @db.VarChar(150)
+  prix_actuel  Decimal          @db.Decimal(10, 2)
+  disponible   Boolean          @default(true)
+  
+  id_categorie Int
+  categorie    Categorie        @relation(fields: [id_categorie], references: [id_categorie])
+  
+  lignes_cmd   Ligne_Commande[]
+}
+
+model Reservation {
+  id_reservation Int                @id @default(autoincrement())
+  date_heure     DateTime
+  nb_personnes   Int
+  statut         String             @default("En attente") @db.VarChar(50)
+  
+  id_client      Int
+  client         Client             @relation(fields: [id_client], references: [id_client])
+  
+  tables         Table_Restaurant[] // Prisma va créer la table de liaison auto
+  commandes      Commande[]
+}
+
+// ============================================================
+// 3. LE CŒUR DU SYSTÈME : LA COMMANDE
+// ============================================================
+
+model Commande {
+  id_commande    Int                @id @default(autoincrement())
+  date_creation  DateTime           @default(now())
+  type_cmd       String             @default("Sur place") @db.VarChar(50)
+  statut_cuisine String             @default("En attente") @db.VarChar(50)
+  
+  id_employe     Int
+  employe        Employe            @relation(fields: [id_employe], references: [id_employe])
+  
+  // Clés optionnelles (?) pour permettre les clients de passage
+  id_client      Int?
+  client         Client?            @relation(fields: [id_client], references: [id_client])
+  
+  id_reservation Int?
+  reservation    Reservation?       @relation(fields: [id_reservation], references: [id_reservation])
+  
+  tables         Table_Restaurant[] // Prisma va créer la table de liaison auto
+  lignes         Ligne_Commande[]
+  paiements      Paiement[]
+}
+
+// ============================================================
+// 4. TABLES DE NIVEAU 2 (Détails et Argent)
+// ============================================================
+
+model Ligne_Commande {
+  id_ligne       Int       @id @default(autoincrement())
+  quantite       Int       @default(1)
+  prix_moment    Decimal   @db.Decimal(10, 2)
+  note_cuisson   String?   @db.VarChar(255)
+  
+  id_commande    Int
+  commande       Commande  @relation(fields: [id_commande], references: [id_commande], onDelete: Cascade)
+  
+  id_plat        Int
+  plat           Plat      @relation(fields: [id_plat], references: [id_plat])
+}
+
+model Paiement {
+  id_paiement    Int       @id @default(autoincrement())
+  date_paiement  DateTime  @default(now())
+  montant        Decimal   @db.Decimal(10, 2)
+  methode        String    @db.VarChar(50)
+  
+  id_commande    Int
+  commande       Commande  @relation(fields: [id_commande], references: [id_commande], onDelete: Cascade)
+}
