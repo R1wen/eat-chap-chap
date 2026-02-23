@@ -18,15 +18,21 @@ import {
 
 export default function AnalyticsPage() {
     const [stats, setStats] = useState<any>(null);
+    const [analytics, setAnalytics] = useState<any>(null);
+    const [employes, setEmployes] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("/api/stats")
-            .then(res => res.json())
-            .then(data => {
-                setStats(data);
-                setLoading(false);
-            });
+        Promise.all([
+            fetch("/api/stats").then(r => r.json()).catch(() => null),
+            fetch("/api/analytics").then(r => r.json()).catch(() => null),
+            fetch("/api/employes").then(r => r.json()).catch(() => [])
+        ]).then(([s, a, e]) => {
+            setStats(s);
+            setAnalytics(a);
+            setEmployes(Array.isArray(e) ? e : []);
+            setLoading(false);
+        });
     }, []);
 
     if (loading) return (
@@ -52,28 +58,28 @@ export default function AnalyticsPage() {
                         title="Chiffre d'Affaires"
                         value={`${stats.revenue.toFixed(2)} €`}
                         icon={<DollarSign className="w-6 h-6" />}
-                        trend="+12.5%"
+                        trend={stats.revenue > 0 ? `${((stats.trend?.slice(-1)[0]?.total || 0) / Math.max(stats.revenue / 7, 1) * 100 - 100).toFixed(1)}%` : "—"}
                         positive={true}
                     />
                     <StatCard
                         title="Commandes Actives"
                         value={stats.activeOrders}
                         icon={<ShoppingBag className="w-6 h-6" />}
-                        trend="-2.4%"
-                        positive={false}
+                        trend={stats.activeOrders > 0 ? `${stats.activeOrders} en cours` : "0"}
+                        positive={stats.activeOrders > 0}
                     />
                     <StatCard
                         title="Occupation"
                         value={`${stats.occupancy}%`}
                         icon={<Target className="w-6 h-6" />}
-                        trend="+8.1%"
-                        positive={true}
+                        trend={`${stats.occupiedTables}/${stats.totalTables} tables`}
+                        positive={stats.occupancy > 50}
                     />
                     <StatCard
                         title="Réservations"
-                        value={stats.recentReservations.length}
+                        value={stats.recentReservations?.length ?? 0}
                         icon={<Calendar className="w-6 h-6" />}
-                        trend="+5.0%"
+                        trend={`${stats.recentReservations?.length ?? 0} récentes`}
                         positive={true}
                     />
                 </div>
@@ -141,57 +147,66 @@ export default function AnalyticsPage() {
                     </div>
                 </div>
 
-                {/* Top Sellers (Mockup for UI) */}
+                {/* Top Sellers — live data */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <BentoCard title="Meilleurs Plats" className="bg-white/60">
-                        <div className="space-y-4">
-                            {[
-                                { name: "Burger Chap Chap", sales: 142, revenue: "2,130 €" },
-                                { name: "Pizza Diabolique", sales: 98, revenue: "1,470 €" },
-                                { name: "Salade César Royale", sales: 74, revenue: "888 €" }
-                            ].map((item, i) => (
+                        <div className="space-y-4 mt-2">
+                            {analytics?.topPlats?.length > 0 ? analytics.topPlats.map((item: any, i: number) => (
                                 <div key={i} className="flex justify-between items-center py-2 border-b border-secondary/5 last:border-0">
-                                    <div>
-                                        <p className="font-black text-secondary text-sm">{item.name}</p>
-                                        <p className="text-[9px] font-bold text-muted uppercase">{item.sales} ventes</p>
+                                    <div className="flex gap-3 items-center">
+                                        <span className="w-6 h-6 rounded-lg bg-secondary/5 flex items-center justify-center text-[10px] font-black text-secondary">{i + 1}</span>
+                                        <div>
+                                            <p className="font-black text-secondary text-sm">{item.libelle}</p>
+                                            <p className="text-[9px] font-bold text-muted uppercase">{item.count} vente{item.count !== 1 ? 's' : ''}</p>
+                                        </div>
                                     </div>
-                                    <p className="font-black text-primary text-sm">{item.revenue}</p>
+                                    <span className="text-[10px] font-black text-primary">#{i + 1}</span>
                                 </div>
-                            ))}
+                            )) : (
+                                <p className="text-[10px] text-muted font-black uppercase tracking-widest py-6 text-center opacity-40">Aucune donnée</p>
+                            )}
                         </div>
                     </BentoCard>
-                    <BentoCard title="Performance Staff" className="bg-white/60">
-                        <div className="space-y-4">
-                            {[
-                                { name: "Marie L.", tables: 42, volume: "1,840 €" },
-                                { name: "Jean D.", tables: 38, volume: "1,620 €" },
-                                { name: "Sophie K.", tables: 35, volume: "1,510 €" }
-                            ].map((item, i) => (
+                    <BentoCard title="Équipe en Poste" className="bg-white/60">
+                        <div className="space-y-4 mt-2">
+                            {employes.slice(0, 4).map((emp: any, i: number) => (
                                 <div key={i} className="flex justify-between items-center py-2 border-b border-secondary/5 last:border-0">
-                                    <div>
-                                        <p className="font-black text-secondary text-sm">{item.name}</p>
-                                        <p className="text-[9px] font-bold text-muted uppercase">{item.tables} tables servies</p>
+                                    <div className="flex gap-3 items-center">
+                                        <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-sm serif">
+                                            {emp.prenom?.[0]}{emp.nom?.[0]}
+                                        </div>
+                                        <div>
+                                            <p className="font-black text-secondary text-sm">{emp.prenom} {emp.nom}</p>
+                                            <p className="text-[9px] font-bold text-muted uppercase">{emp.role}</p>
+                                        </div>
                                     </div>
-                                    <p className="font-black text-secondary text-sm">{item.volume}</p>
+                                    <div className="w-2 h-2 rounded-full bg-green-500" />
                                 </div>
                             ))}
+                            {employes.length === 0 && (
+                                <p className="text-[10px] text-muted font-black uppercase tracking-widest py-6 text-center opacity-40">Aucun employé</p>
+                            )}
                         </div>
                     </BentoCard>
-                    <BentoCard title="Canaux de Vente" className="bg-secondary text-white">
+                    <BentoCard title="Revenus par Type" className="bg-secondary text-white">
                         <div className="space-y-6 py-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-black uppercase tracking-widest">Sur place</span>
-                                <span className="text-xl font-black text-primary">78%</span>
+                                <span className="text-xl font-black text-primary">{stats?.totalTables > 0 ? `${stats.occupancy}%` : '—'}</span>
                             </div>
                             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                                <div className="h-full bg-primary" style={{ width: '78%' }} />
+                                <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${stats?.occupancy || 0}%` }} />
                             </div>
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-black uppercase tracking-widest">À emporter</span>
-                                <span className="text-xl font-black text-primary">22%</span>
+                                <span className="text-xs font-black uppercase tracking-widest">Tables libres</span>
+                                <span className="text-xl font-black text-primary">{stats ? `${stats.totalTables - stats.occupiedTables}/${stats.totalTables}` : '—'}</span>
                             </div>
                             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-500" style={{ width: '22%' }} />
+                                <div className="h-full bg-blue-400 transition-all duration-1000" style={{ width: `${stats?.totalTables > 0 ? ((stats.totalTables - stats.occupiedTables) / stats.totalTables * 100) : 0}%` }} />
+                            </div>
+                            <div className="pt-2 border-t border-white/10">
+                                <p className="text-[10px] opacity-60 font-bold uppercase tracking-widest">CA Total</p>
+                                <p className="text-2xl font-black">{analytics?.totalRevenue?.toFixed(2) || '0.00'} €</p>
                             </div>
                         </div>
                     </BentoCard>

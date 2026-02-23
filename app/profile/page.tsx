@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import BentoCard from "@/components/ui/BentoCard";
-import { User, Star, Utensils, Calendar, MapPin, Receipt, ArrowRight, Heart, Award, ShieldCheck } from "lucide-react";
+import { User, Users, Star, Utensils, Calendar, MapPin, Receipt, ArrowRight, Heart, Award, ShieldCheck } from "lucide-react";
 
 export default function ProfilePage() {
     return (

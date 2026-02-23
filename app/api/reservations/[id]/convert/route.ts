@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/db";
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
@@ -40,10 +40,8 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
         });
 
         return NextResponse.json(commande);
-    } catch (error: any) {
-        console.error(error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
+    } catch (error) {
+        console.error("Conversion Error:", error);
+        return NextResponse.json({ error: "Failed to convert reservation" }, { status: 500 });
     }
 }

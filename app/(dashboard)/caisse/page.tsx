@@ -15,7 +15,8 @@ import {
     QrCode,
     Printer,
     ArrowLeft,
-    Utensils
+    Utensils,
+    Loader2
 } from "lucide-react";
 import Link from "next/link";
 
@@ -24,6 +25,7 @@ export default function CaissePage() {
     const [selectedOrder, setSelectedOrder] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
 
     useEffect(() => {
         fetchActiveOrders();
@@ -61,13 +63,17 @@ export default function CaissePage() {
                 })
             });
             if (res.ok) {
-                // Success - remove from list and clear selection
                 setOrders(prev => prev.filter(o => o.id_commande !== selectedOrder.id_commande));
                 setSelectedOrder(null);
-                alert("Paiement enregistré avec succès !");
+                setToast({ msg: `Paiement ${method} enregistré avec succès !`, ok: true });
+                setTimeout(() => setToast(null), 4000);
+            } else {
+                setToast({ msg: "Erreur lors du paiement", ok: false });
+                setTimeout(() => setToast(null), 4000);
             }
         } catch (error) {
-            console.error(error);
+            setToast({ msg: "Erreur réseau", ok: false });
+            setTimeout(() => setToast(null), 4000);
         }
         setIsProcessing(false);
     };
@@ -77,6 +83,12 @@ export default function CaissePage() {
             <div className="ambient-glow" />
             <Header />
 
+            {toast && (
+                <div className={`fixed top-28 right-8 z-[100] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl font-black text-sm animate-in slide-in-from-right ${toast.ok ? "bg-green-500 text-white" : "bg-red-500 text-white"}`}>
+                    {toast.ok ? <CheckCircle2 className="w-5 h-5" /> : <Loader2 className="w-5 h-5" />}
+                    {toast.msg}
+                </div>
+            )}
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
                 {/* Left Side: Active Tickets (Column 5) */}
                 <div className="lg:col-span-12 xl:col-span-5 space-y-6">
@@ -198,6 +210,8 @@ export default function CaissePage() {
                                                 <span className="text-[10px] font-black uppercase tracking-widest">Espèces</span>
                                             </button>
                                             <button
+                                                disabled={isProcessing}
+                                                onClick={() => handlePayment("MOBILE")}
                                                 className="flex flex-col items-center gap-3 p-6 glass rounded-2xl hover:bg-secondary hover:text-white transition-all group"
                                             >
                                                 <QrCode className="w-6 h-6 text-primary group-hover:text-white transition-colors" />

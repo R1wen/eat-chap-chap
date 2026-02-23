@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/db";
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
@@ -14,8 +14,6 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
         return NextResponse.json(plat);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -30,8 +28,6 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
         return NextResponse.json(plat);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -44,7 +40,5 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
         return NextResponse.json({ success: true });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
     }
 }

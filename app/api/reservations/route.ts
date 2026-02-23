@@ -1,19 +1,21 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/db";
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
+        const { searchParams } = new URL(req.url);
+        const clientId = searchParams.get("clientId");
+
         const res = await prisma.reservation.findMany({
+            where: clientId ? { id_client: parseInt(clientId) } : undefined,
             include: { client: true, tables: true },
             orderBy: { date_heure: 'asc' }
         });
         return NextResponse.json(res);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -32,7 +34,5 @@ export async function POST(req: Request) {
         return NextResponse.json(res);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
     }
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/db";
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
     try {
@@ -65,20 +65,23 @@ export async function POST(req: Request) {
             message: "Commande enregistrée avec succès"
         });
 
-    } catch (error: any) {
-        console.error("Order creation error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
+    } catch (error) {
+        console.error("Order API Error:", error);
+        return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
     }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
+        const { searchParams } = new URL(req.url);
+        const clientId = searchParams.get("clientId");
+
         const orders = await prisma.commande.findMany({
+            where: clientId ? { id_client: parseInt(clientId) } : undefined,
             include: {
                 client: true,
                 employe: true,
+                tables: true,
                 lignes: {
                     include: { plat: true }
                 },
@@ -89,7 +92,5 @@ export async function GET() {
         return NextResponse.json(orders);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-        await prisma.$disconnect();
     }
 }
