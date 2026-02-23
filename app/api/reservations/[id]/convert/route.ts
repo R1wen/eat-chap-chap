@@ -28,7 +28,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
                 type_cmd: "Sur place",
                 statut_cuisine: "En attente",
                 tables: {
-                    connect: reservation.tables.map(t => ({ id_table: t.id_table }))
+                    connect: reservation.tables.map((t: (typeof reservation.tables)[number]) => ({ id_table: t.id_table }))
                 }
             }
         });
