@@ -60,14 +60,14 @@ export default function TablesPage() {
                     zone: newTable.zone
                 })
             });
+            const data = await res.json();
             if (res.ok) {
-                const added = await res.json();
-                setTables([...tables, added]);
+                setTables([...tables, data]);
                 setIsModalOpen(false);
                 setNewTable({ numero: '', capacite: 2, zone: 'Salle Centrale' });
-                showToast(`Table ${newTable.numero} ajoutée !`, "ok");
+                showToast(`Table n°${newTable.numero} ajoutée !`, "ok");
             } else {
-                showToast("Erreur lors de la création", "err");
+                showToast(data.error || "Erreur lors de la création", "err");
             }
         } catch {
             showToast("Erreur réseau", "err");
@@ -239,7 +239,7 @@ export default function TablesPage() {
                                             </div>
                                             <div>
                                                 <p className="text-sm font-black text-secondary">{res.client?.nom || "Client"}</p>
-                                                <p className="text-[10px] text-muted uppercase font-black">{res.nombre_personnes} pers</p>
+                                                <p className="text-[10px] text-muted uppercase font-black">{res.nb_personnes} pers</p>
                                             </div>
                                         </div>
                                         <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase ${res.statut === "Confirmée" ? "bg-green-500/10 text-green-600" : "bg-yellow-500/10 text-yellow-600"}`}>

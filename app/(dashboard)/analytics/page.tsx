@@ -56,9 +56,9 @@ export default function AnalyticsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <StatCard
                         title="Chiffre d'Affaires"
-                        value={`${stats.revenue.toFixed(2)} €`}
+                        value={`${stats.revenue.toFixed(2)} FCFA`}
                         icon={<DollarSign className="w-6 h-6" />}
-                        trend={stats.revenue > 0 ? `${((stats.trend?.slice(-1)[0]?.total || 0) / Math.max(stats.revenue / 7, 1) * 100 - 100).toFixed(1)}%` : "—"}
+                        trend={stats.revenue > 0 ? `${((stats.trend?.slice(-1)[0]?.total || 0) / Math.max(stats.revenue / 7, 1) * 100 - 100).toFixed(1)}%` : "�?""}
                         positive={true}
                     />
                     <StatCard
@@ -89,7 +89,7 @@ export default function AnalyticsPage() {
                     <BentoCard className="lg:col-span-2 !p-10 border-none shadow-2xl bg-white/60 relative overflow-hidden h-[500px]">
                         <div className="flex justify-between items-center mb-12">
                             <div>
-                                <h3 className="text-3xl font-black text-secondary serif italic tracking-tighter">Évolution du Revenu</h3>
+                                <h3 className="text-3xl font-black text-secondary serif italic tracking-tighter">�?volution du Revenu</h3>
                                 <p className="text-[10px] font-black text-muted uppercase tracking-widest">Performance des 7 derniers jours</p>
                             </div>
                             <div className="flex gap-2">
@@ -107,7 +107,7 @@ export default function AnalyticsPage() {
                                         style={{ height: `${Math.max(20, (d.total / Math.max(...stats.trend.map((t: any) => t.total || 1))) * 100)}%` }}
                                     >
                                         <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-secondary text-white text-[9px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                                            {d.total}€
+                                            {d.total}�,�
                                         </div>
                                     </div>
                                     <span className="text-[10px] font-black text-muted uppercase tracking-tighter">{d.day}</span>
@@ -147,7 +147,7 @@ export default function AnalyticsPage() {
                     </div>
                 </div>
 
-                {/* Top Sellers — live data */}
+                {/* Top Sellers �?" live data */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <BentoCard title="Meilleurs Plats" className="bg-white/60">
                         <div className="space-y-4 mt-2">
@@ -167,7 +167,7 @@ export default function AnalyticsPage() {
                             )}
                         </div>
                     </BentoCard>
-                    <BentoCard title="Équipe en Poste" className="bg-white/60">
+                    <BentoCard title="�?quipe en Poste" className="bg-white/60">
                         <div className="space-y-4 mt-2">
                             {employes.slice(0, 4).map((emp: any, i: number) => (
                                 <div key={i} className="flex justify-between items-center py-2 border-b border-secondary/5 last:border-0">
@@ -192,21 +192,21 @@ export default function AnalyticsPage() {
                         <div className="space-y-6 py-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-black uppercase tracking-widest">Sur place</span>
-                                <span className="text-xl font-black text-primary">{stats?.totalTables > 0 ? `${stats.occupancy}%` : '—'}</span>
+                                <span className="text-xl font-black text-primary">{stats?.totalTables > 0 ? `${stats.occupancy}%` : '�?"'}</span>
                             </div>
                             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                                 <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${stats?.occupancy || 0}%` }} />
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-black uppercase tracking-widest">Tables libres</span>
-                                <span className="text-xl font-black text-primary">{stats ? `${stats.totalTables - stats.occupiedTables}/${stats.totalTables}` : '—'}</span>
+                                <span className="text-xl font-black text-primary">{stats ? `${stats.totalTables - stats.occupiedTables}/${stats.totalTables}` : '�?"'}</span>
                             </div>
                             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                                 <div className="h-full bg-blue-400 transition-all duration-1000" style={{ width: `${stats?.totalTables > 0 ? ((stats.totalTables - stats.occupiedTables) / stats.totalTables * 100) : 0}%` }} />
                             </div>
                             <div className="pt-2 border-t border-white/10">
                                 <p className="text-[10px] opacity-60 font-bold uppercase tracking-widest">CA Total</p>
-                                <p className="text-2xl font-black">{analytics?.totalRevenue?.toFixed(2) || '0.00'} €</p>
+                                <p className="text-2xl font-black">{analytics?.totalRevenue?.toFixed(2) || '0.00'} FCFA</p>
                             </div>
                         </div>
                     </BentoCard>

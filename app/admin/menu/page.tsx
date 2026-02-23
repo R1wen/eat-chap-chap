@@ -59,7 +59,7 @@ export default function MenuPage() {
                                         <h4 className="text-4xl font-black italic serif tracking-tighter leading-none">{p.libelle}</h4>
                                         <p className="text-white/60 text-sm font-medium">L'équilibre parfait entre textures et saveurs, préparé quotidiennement par notre chef.</p>
                                         <div className="flex items-center gap-6 pt-4">
-                                            <span className="text-3xl font-black text-primary serif">{p.prix_actuel} €</span>
+                                            <span className="text-3xl font-black text-primary serif">{p.prix_actuel} FCFA</span>
                                             <button className="px-6 py-2 rounded-[8px] bg-primary text-white font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:opacity-90 transition-all">Ajouter</button>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@ export default function MenuPage() {
                                     </div>
                                 </div>
                                 <div className="flex items-end justify-between mt-8">
-                                    <span className="text-xl font-black text-secondary serif">{p.prix_actuel} €</span>
+                                    <span className="text-xl font-black text-secondary serif">{p.prix_actuel} FCFA</span>
                                     <button className="w-10 h-10 rounded-xl bg-secondary/5 flex items-center justify-center text-secondary hover:bg-primary hover:text-white transition-all group-hover:scale-110">
                                         <Plus className="w-5 h-5" />
                                     </button>

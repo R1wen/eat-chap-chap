@@ -87,7 +87,7 @@ export default function POSPage() {
                                 <h2 className="text-3xl font-black text-secondary serif leading-none">Table 04</h2>
                                 <div className="flex items-center gap-2 mt-1">
                                     <p className="text-[10px] font-black text-muted uppercase tracking-widest">Serveur: Marie</p>
-                                    <span className="text-secondary/20">•</span>
+                                    <span className="text-secondary/20">�?�</span>
                                     <select
                                         className="text-[10px] font-black text-primary uppercase bg-transparent outline-none cursor-pointer"
                                         onChange={(e) => setSelectedClient(Number(e.target.value))}
@@ -95,7 +95,7 @@ export default function POSPage() {
                                         <option value="">Passagers</option>
                                         {clients.map(c => <option key={c.id_client} value={c.id_client}>{c.nom}</option>)}
                                     </select>
-                                    <span className="text-secondary/20">•</span>
+                                    <span className="text-secondary/20">�?�</span>
                                     <select
                                         className="text-[10px] font-black text-accent uppercase bg-transparent outline-none cursor-pointer"
                                         onChange={(e) => setSelectedRes(Number(e.target.value))}
@@ -132,7 +132,7 @@ export default function POSPage() {
                                     </div>
                                     <p className="text-[10px] font-black text-primary uppercase tracking-tighter mb-1">{plat.categorie?.libelle}</p>
                                     <h4 className="text-lg font-bold text-secondary">{plat.libelle}</h4>
-                                    <p className="text-xl font-black text-secondary serif mt-4">{plat.prix_actuel} €</p>
+                                    <p className="text-xl font-black text-secondary serif mt-4">{plat.prix_actuel} FCFA</p>
                                     {plat.libelle.includes('Popular') && (
                                         <Heart className="w-4 h-4 text-accent absolute top-4 left-4 fill-accent" />
                                     )}
@@ -155,14 +155,14 @@ export default function POSPage() {
                                 <div key={i} className="flex justify-between items-start group animate-fade-in">
                                     <div className="space-y-1">
                                         <p className="text-sm font-bold text-secondary uppercase">{item.libelle}</p>
-                                        {item.note && <p className="text-[10px] font-bold text-primary italic">↳ {item.note}</p>}
+                                        {item.note && <p className="text-[10px] font-bold text-primary italic">�?� {item.note}</p>}
                                         <div className="flex items-center gap-2 mt-1">
-                                            <span className="text-[10px] font-black text-muted">{item.qty} x {item.prix_actuel} €</span>
+                                            <span className="text-[10px] font-black text-muted">{item.qty} x {item.prix_actuel} FCFA</span>
                                             <button className="p-1 rounded bg-secondary/5 hover:bg-secondary/10 text-muted"><Edit3 className="w-3 h-3" /></button>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <span className="text-sm font-black text-secondary">{(item.qty * Number(item.prix_actuel)).toFixed(2)} €</span>
+                                        <span className="text-sm font-black text-secondary">{(item.qty * Number(item.prix_actuel)).toFixed(2)} FCFA</span>
                                         <button onClick={() => removeFromCart(item.id_plat, item.note)} className="p-2 rounded-lg bg-red-500/5 text-red-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white">
                                             <Trash2 className="w-4 h-4" />
                                         </button>
@@ -181,11 +181,11 @@ export default function POSPage() {
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center text-xs font-bold text-muted uppercase">
                                     <span>Total Partiel</span>
-                                    <span>{currentTotal.toFixed(2)} €</span>
+                                    <span>{currentTotal.toFixed(2)} FCFA</span>
                                 </div>
                                 <div className="flex justify-between items-center text-4xl font-black text-secondary serif border-t border-light-beige pt-4 tracking-tighter">
                                     <span>TOTAL</span>
-                                    <span className="text-primary italic">{currentTotal.toFixed(2)} €</span>
+                                    <span className="text-primary italic">{currentTotal.toFixed(2)} FCFA</span>
                                 </div>
                             </div>
 
@@ -195,11 +195,11 @@ export default function POSPage() {
                                     <span className="text-[8px] font-black uppercase tracking-widest">Carte</span>
                                 </button>
                                 <button className="flex flex-col items-center justify-center py-4 rounded-xl glass border-secondary/10 hover:bg-secondary hover:text-white transition-all">
-                                    <span className="text-xl mb-1">💶</span>
+                                    <span className="text-xl mb-1">�Y'�</span>
                                     <span className="text-[8px] font-black uppercase tracking-widest">Espèces</span>
                                 </button>
                                 <button className="flex flex-col items-center justify-center py-4 rounded-xl glass border-secondary/10 hover:bg-secondary hover:text-white transition-all">
-                                    <span className="text-xl mb-1">📱</span>
+                                    <span className="text-xl mb-1">�Y"�</span>
                                     <span className="text-[8px] font-black uppercase tracking-widest">Titre</span>
                                 </button>
                             </div>

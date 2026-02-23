@@ -152,7 +152,7 @@ export default function ClientOrderPage({ params }: { params: Promise<{ tableId:
                                         <p className={`text-[10px] uppercase font-black tracking-widest opacity-60`}>{plat.categorie?.libelle}</p>
                                     </div>
                                     <div className="flex items-center justify-between mt-4">
-                                        <span className={`text-lg font-black serif ${inCart ? 'text-primary' : 'text-secondary'}`}>{plat.prix_actuel} €</span>
+                                        <span className={`text-lg font-black serif ${inCart ? 'text-primary' : 'text-secondary'}`}>{plat.prix_actuel} FCFA</span>
                                         {inCart ? (
                                             <button onClick={(e) => { e.stopPropagation(); toggleToCart(plat); }} className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><Check className="w-4 h-4" /></button>
                                         ) : (
@@ -194,7 +194,7 @@ export default function ClientOrderPage({ params }: { params: Promise<{ tableId:
                                                 onChange={(e) => updateNote(item.id_plat, e.target.value)}
                                             />
                                         </div>
-                                        <span className="text-sm font-black text-primary serif">{(item.quantity * Number(item.prix_actuel)).toFixed(2)} €</span>
+                                        <span className="text-sm font-black text-primary serif">{(item.quantity * Number(item.prix_actuel)).toFixed(2)} FCFA</span>
                                     </div>
                                 ))}
                             </div>
@@ -203,7 +203,7 @@ export default function ClientOrderPage({ params }: { params: Promise<{ tableId:
                             <div className="p-6 md:px-8 flex items-center justify-between gap-8">
                                 <div className="space-y-1">
                                     <p className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Total Commande</p>
-                                    <p className="text-3xl font-black text-white serif leading-none">{total.toFixed(2)} €</p>
+                                    <p className="text-3xl font-black text-white serif leading-none">{total.toFixed(2)} FCFA</p>
                                 </div>
                                 <button
                                     onClick={submitOrder}

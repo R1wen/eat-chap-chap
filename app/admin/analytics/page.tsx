@@ -55,10 +55,10 @@ export default function AnalyticsPage() {
                 {/* Global Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     {[
-                        { label: "Rev. Total", val: loading ? "—" : `${totalRevenue.toFixed(0)} €`, icon: DollarSign, color: "text-primary" },
-                        { label: "Ticket Moy.", val: loading ? "—" : `${avgTicket.toFixed(2)} €`, icon: TrendingUp, color: "text-green-600" },
-                        { label: "Commandes Actives", val: loading ? "—" : `${stats?.activeOrders ?? 0}`, icon: ShoppingBag, color: "text-blue-500" },
-                        { label: "Occupation", val: loading ? "—" : `${stats?.occupancy ?? 0}%`, icon: Users, color: "text-secondary" },
+                        { label: "Rev. Total", val: loading ? "�?"" : `${totalRevenue.toFixed(0)} FCFA`, icon: DollarSign, color: "text-primary" },
+                        { label: "Ticket Moy.", val: loading ? "�?"" : `${avgTicket.toFixed(2)} FCFA`, icon: TrendingUp, color: "text-green-600" },
+                        { label: "Commandes Actives", val: loading ? "�?"" : `${stats?.activeOrders ?? 0}`, icon: ShoppingBag, color: "text-blue-500" },
+                        { label: "Occupation", val: loading ? "�?"" : `${stats?.occupancy ?? 0}%`, icon: Users, color: "text-secondary" },
                     ].map((s, i) => (
                         <BentoCard key={i} className="pt-8 border-none shadow-xl bg-white/60">
                             <div className="flex items-start justify-between">
@@ -90,7 +90,7 @@ export default function AnalyticsPage() {
                                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
                                         <XAxis dataKey="name" axisLine={false} tickLine={false} fontSize={10} stroke="#7f8c8d" />
                                         <YAxis axisLine={false} tickLine={false} fontSize={10} stroke="#7f8c8d" />
-                                        <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} formatter={(v) => [`${Number(v).toFixed(2)} €`, "Revenu"]} />
+                                        <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} formatter={(v) => [`${Number(v).toFixed(2)} FCFA`, "Revenu"]} />
                                         <Area type="monotone" dataKey="value" stroke="#B85C38" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
                                     </AreaChart>
                                 </ResponsiveContainer>
@@ -110,7 +110,7 @@ export default function AnalyticsPage() {
                                     { s: "Soir", v: trendData.slice(4).reduce((a: number, d: any) => a + (d.value || 0), 0) / 3 || 0 }
                                 ]}>
                                     <XAxis dataKey="s" axisLine={false} tickLine={false} stroke="#7f8c8d" />
-                                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none' }} formatter={(v) => [`${Number(v).toFixed(2)} €`, "Revenu moyen"]} />
+                                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none' }} formatter={(v) => [`${Number(v).toFixed(2)} FCFA`, "Revenu moyen"]} />
                                     <Bar dataKey="v" radius={[8, 8, 0, 0]}>
                                         <Cell fill="rgba(44, 62, 80, 0.1)" />
                                         <Cell fill="#B85C38" />
@@ -188,7 +188,7 @@ export default function AnalyticsPage() {
                             </h4>
                             <p className="text-white/60 text-sm font-medium leading-relaxed">
                                 {totalRevenue > 0
-                                    ? `${totalRevenue.toFixed(0)} € de chiffre d'affaires cumulé. Continuez ainsi !`
+                                    ? `${totalRevenue.toFixed(0)} FCFA de chiffre d'affaires cumulé. Continuez ainsi !`
                                     : "Commencez à enregistrer des ventes pour voir vos statistiques ici."
                                 }
                             </p>

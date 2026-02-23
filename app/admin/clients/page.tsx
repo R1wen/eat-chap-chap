@@ -47,8 +47,8 @@ export default function ClientsPage() {
             const cmds = await cmdRes.json().catch(() => []);
             const reservs = await resRes.json().catch(() => []);
             const combined = [
-                ...(Array.isArray(cmds) ? cmds.map((o: any) => ({ type: "Commande", date: o.date_creation, desc: `${o.lignes?.length || 0} plat(s) • Table ${o.tables?.[0]?.numero || "TK"}`, id: o.id_commande })) : []),
-                ...(Array.isArray(reservs) ? reservs.map((r: any) => ({ type: "Réservation", date: r.date_heure, desc: `${r.nb_personnes} pers. • ${r.statut}`, id: r.id_reservation })) : [])
+                ...(Array.isArray(cmds) ? cmds.map((o: any) => ({ type: "Commande", date: o.date_creation, desc: `${o.lignes?.length || 0} plat(s) �?� Table ${o.tables?.[0]?.numero || "TK"}`, id: o.id_commande })) : []),
+                ...(Array.isArray(reservs) ? reservs.map((r: any) => ({ type: "Réservation", date: r.date_heure, desc: `${r.nb_personnes} pers. �?� ${r.statut}`, id: r.id_reservation })) : [])
             ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             setHistory(combined);
         } catch {
@@ -257,11 +257,11 @@ export default function ClientsPage() {
                                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-secondary/5 mb-4">
                                     <div className="text-center">
                                         <div className="text-[9px] text-muted uppercase tracking-wider font-black mb-1">Commandes</div>
-                                        <div className="text-2xl font-black text-secondary serif">{client._count?.commandes ?? "—"}</div>
+                                        <div className="text-2xl font-black text-secondary serif">{client._count?.commandes ?? "�?""}</div>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-[9px] text-muted uppercase tracking-wider font-black mb-1">Réservations</div>
-                                        <div className="text-2xl font-black text-secondary serif">{client._count?.reservations ?? "—"}</div>
+                                        <div className="text-2xl font-black text-secondary serif">{client._count?.reservations ?? "�?""}</div>
                                     </div>
                                 </div>
 

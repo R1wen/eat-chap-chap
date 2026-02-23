@@ -130,7 +130,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                                             </div>
                                         </div>
                                         <div className="text-right space-y-1">
-                                            <p className="text-lg font-black text-secondary">{(Number(line.prix_moment) * line.quantite).toFixed(2)} €</p>
+                                            <p className="text-lg font-black text-secondary">{(Number(line.prix_moment) * line.quantite).toFixed(2)} FCFA</p>
                                             <p className="text-[10px] font-black text-muted uppercase opacity-40">{Number(line.prix_moment).toFixed(2)} / unité</p>
                                         </div>
                                     </div>
@@ -181,7 +181,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                                 <div className="pt-8 space-y-6">
                                     <div className="flex justify-between items-end">
                                         <p className="text-[10px] font-black uppercase text-white/40 tracking-widest">Total Net</p>
-                                        <p className="text-5xl font-black text-primary tracking-tighter">{calculateTotal().toFixed(2)} €</p>
+                                        <p className="text-5xl font-black text-primary tracking-tighter">{calculateTotal().toFixed(2)} FCFA</p>
                                     </div>
 
                                     {!isPaid && (

@@ -32,11 +32,29 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { numero, capacite, zone } = body;
+
+        if (!numero || isNaN(Number(numero))) {
+            return NextResponse.json({ error: "Numéro de table invalide" }, { status: 400 });
+        }
+
+        // Check for duplicate numero
+        const existing = await prisma.table_Restaurant.findUnique({
+            where: { numero: Number(numero) }
+        });
+        if (existing) {
+            return NextResponse.json({ error: `La table n°${numero} existe déjà` }, { status: 409 });
+        }
+
         const table = await prisma.table_Restaurant.create({
-            data: { numero, capacite, zone }
+            data: {
+                numero: Number(numero),
+                capacite: Number(capacite) || 2,
+                zone: zone || "Salle Centrale"
+            }
         });
         return NextResponse.json(table);
     } catch (error) {
-        return NextResponse.json({ error: "Failed to create table" }, { status: 500 });
+        console.error("POST /api/tables error:", error);
+        return NextResponse.json({ error: "Échec de la création de la table" }, { status: 500 });
     }
 }

@@ -21,7 +21,7 @@ export default function Header() {
                     <Coffee className="text-white w-6 h-6" />
                 </div>
                 <h1 className="text-2xl font-black text-secondary tracking-tighter serif">
-                    EAT <span className="text-primary italic">Chap.</span>
+                    TO EAT <span className="text-primary italic">Chap Chap</span>
                 </h1>
             </div>
 

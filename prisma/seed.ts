@@ -27,7 +27,7 @@ const futureDate = (hoursFromNow: number) => {
 };
 
 async function main() {
-    console.log("🗑️  Clearing all tables...");
+    console.log("�Y-'️  Clearing all tables...");
     await prisma.paiement.deleteMany();
     await prisma.ligne_Commande.deleteMany();
     await prisma.commande.deleteMany();
@@ -37,10 +37,10 @@ async function main() {
     await prisma.plat.deleteMany();
     await prisma.categorie.deleteMany();
     await prisma.client.deleteMany();
-    console.log("✅ Tables cleared.");
+    console.log("�o. Tables cleared.");
 
-    // ─── 1. CATEGORIES ──────────────────────────────────────────────────────────
-    console.log("📂 Seeding categories...");
+    // �"?�"?�"? 1. CATEGORIES �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y", Seeding categories...");
     await prisma.categorie.createMany({
         data: [
             { libelle: "Entrées" },
@@ -54,8 +54,8 @@ async function main() {
     const cats = await prisma.categorie.findMany({ orderBy: { id_categorie: "asc" } });
     const [catEntrees, catPlats, catDesserts, catBoissons, catVins, catVeg] = cats;
 
-    // ─── 2. PLATS (menu) ────────────────────────────────────────────────────────
-    console.log("🍽️  Seeding menu items...");
+    // �"?�"?�"? 2. PLATS (menu) �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y��️  Seeding menu items...");
     await prisma.plat.createMany({
         data: [
             // Entrées
@@ -63,7 +63,7 @@ async function main() {
             { libelle: "Bruschetta Tomate Basilic", prix_actuel: 9.5, id_categorie: catEntrees.id_categorie },
             { libelle: "Escargots Beurre Aillé", prix_actuel: 12.0, id_categorie: catEntrees.id_categorie },
             { libelle: "Soupe à l'Oignon Gratinée", prix_actuel: 10.5, id_categorie: catEntrees.id_categorie },
-            { libelle: "Carpaccio de Bœuf", prix_actuel: 16.0, id_categorie: catEntrees.id_categorie },
+            { libelle: "Carpaccio de B�"uf", prix_actuel: 16.0, id_categorie: catEntrees.id_categorie },
             { libelle: "Foie Gras Maison", prix_actuel: 22.0, id_categorie: catEntrees.id_categorie },
             // Plats
             { libelle: "Entrecôte 300g", prix_actuel: 29.0, id_categorie: catPlats.id_categorie },
@@ -97,8 +97,8 @@ async function main() {
     });
     const allPlats = await prisma.plat.findMany();
 
-    // ─── 3. TABLES ──────────────────────────────────────────────────────────────
-    console.log("🪑 Seeding restaurant tables...");
+    // �"?�"?�"? 3. TABLES �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y�' Seeding restaurant tables...");
     await prisma.table_Restaurant.createMany({
         data: [
             { numero: 1, capacite: 2, zone: "Terrasse" },
@@ -119,8 +119,8 @@ async function main() {
     });
     const allTables = await prisma.table_Restaurant.findMany({ orderBy: { numero: "asc" } });
 
-    // ─── 4. CLIENTS ─────────────────────────────────────────────────────────────
-    console.log("👤 Seeding clients...");
+    // �"?�"?�"? 4. CLIENTS �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y'� Seeding clients...");
     await prisma.client.createMany({
         data: [
             { nom: "Jean Dupont", telephone: "0611223344", email: "jean.dupont@test.com" },
@@ -142,13 +142,13 @@ async function main() {
             { nom: "Arthur Bonnet", telephone: "0638394041", email: "arthur.b@test.com" },
             { nom: "Sarah François", telephone: "0642434445", email: "sarah.f@orange.fr" },
             { nom: "Paul Martinez", telephone: "0646474849", email: "paul.m@pro.fr" },
-            { nom: "Élodie Perrin", telephone: "0650515253", email: "elodie.p@gmail.com" },
+            { nom: "�?lodie Perrin", telephone: "0650515253", email: "elodie.p@gmail.com" },
         ],
     });
     const allClients = await prisma.client.findMany();
 
-    // ─── 5. STAFF ───────────────────────────────────────────────────────────────
-    console.log("👨‍🍳 Seeding staff...");
+    // �"?�"?�"? 5. STAFF �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y'��?��Y�� Seeding staff...");
     await prisma.employe.createMany({
         data: [
             { nom: "Laurent", prenom: "M.", role: "Manager" },
@@ -166,9 +166,9 @@ async function main() {
     const allStaff = await prisma.employe.findMany();
     const servers = allStaff.filter((e) => e.role === "Serveur");
 
-    // ─── 6. HISTORICAL ORDERS (last 30 days, paid) ──────────────────────────────
-    console.log("📜 Seeding 150 historical orders...");
-    const methods = ["CARTE", "ESPÈCES", "TITRE RESTO"];
+    // �"?�"?�"? 6. HISTORICAL ORDERS (last 30 days, paid) �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y"o Seeding 150 historical orders...");
+    const methods = ["CARTE", "ESP�^CES", "TITRE RESTO"];
     const kitchenStatuses = ["Prêt", "Servi"];
 
     for (let i = 0; i < 150; i++) {
@@ -184,11 +184,11 @@ async function main() {
                 id_employe: staff.id_employe,
                 id_client: client.id_client,
                 statut_cuisine: rand(kitchenStatuses),
-                type_cmd: Math.random() > 0.1 ? "Sur place" : "À emporter",
+                type_cmd: Math.random() > 0.1 ? "Sur place" : "�? emporter",
             },
         });
 
-        // 2–5 items per order
+        // 2�?"5 items per order
         let total = 0;
         const numItems = randInt(2, 5);
         for (let j = 0; j < numItems; j++) {
@@ -200,7 +200,7 @@ async function main() {
                     id_plat: plat.id_plat,
                     quantite: qty,
                     prix_moment: plat.prix_actuel,
-                    note_cuisson: plat.libelle.includes("Entrecôte") ? rand(["Saignant", "À point", "Bien cuit"]) : null,
+                    note_cuisson: plat.libelle.includes("Entrecôte") ? rand(["Saignant", "�? point", "Bien cuit"]) : null,
                 },
             });
             total += Number(plat.prix_actuel) * qty;
@@ -216,8 +216,8 @@ async function main() {
         });
     }
 
-    // ─── 7. ACTIVE ORDERS (today, unpaid) ───────────────────────────────────────
-    console.log("🔥 Seeding 6 active in-progress orders...");
+    // �"?�"?�"? 7. ACTIVE ORDERS (today, unpaid) �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y"� Seeding 6 active in-progress orders...");
     const activeStatuses = ["En attente", "En cours", "En cours"];
     for (let i = 0; i < 6; i++) {
         const table = allTables[i];
@@ -249,8 +249,8 @@ async function main() {
         }
     }
 
-    // ─── 8. RESERVATIONS ────────────────────────────────────────────────────────
-    console.log("📅 Seeding reservations...");
+    // �"?�"?�"? 8. RESERVATIONS �"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?�"?
+    console.log("�Y". Seeding reservations...");
     const reservationData = [
         { clientIdx: 0, guests: 4, hoursOffset: 2, statut: "Confirmé" },
         { clientIdx: 1, guests: 2, hoursOffset: 3, statut: "Confirmé" },
@@ -281,21 +281,21 @@ async function main() {
     }
 
     console.log(`
-✅ Seeding complete!
-   • ${cats.length} categories
-   • ${allPlats.length} menu items
-   • ${allTables.length} tables
-   • ${allClients.length} clients
-   • ${allStaff.length} staff members
-   • 150 historical paid orders
-   • 6 active in-progress orders
-   • ${reservationData.length} reservations
+�o. Seeding complete!
+   �?� ${cats.length} categories
+   �?� ${allPlats.length} menu items
+   �?� ${allTables.length} tables
+   �?� ${allClients.length} clients
+   �?� ${allStaff.length} staff members
+   �?� 150 historical paid orders
+   �?� 6 active in-progress orders
+   �?� ${reservationData.length} reservations
   `);
 }
 
 main()
     .catch((e) => {
-        console.error("❌ Seed failed:", e);
+        console.error("�O Seed failed:", e);
         process.exit(1);
     })
     .finally(async () => {

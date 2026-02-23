@@ -401,7 +401,7 @@ export default function MenuManagementPage() {
                                             </div>
 
                                             <div className="flex justify-between items-center">
-                                                <p className="text-2xl font-black text-secondary tracking-tighter">{Number(plat.prix_actuel).toFixed(2)} €</p>
+                                                <p className="text-2xl font-black text-secondary tracking-tighter">{Number(plat.prix_actuel).toFixed(2)} FCFA</p>
                                                 <div className="flex gap-2">
                                                     <button
                                                         onClick={() => openEdit(plat)}

@@ -198,7 +198,7 @@ export default function ReservationDetailPage({ params }: { params: Promise<{ id
                                     </div>
                                     <div className="flex justify-between items-center text-[10px]">
                                         <span className="font-black text-secondary uppercase tracking-widest">Panier Moyen</span>
-                                        <span className="text-secondary font-bold">42,50 €</span>
+                                        <span className="text-secondary font-bold">42,50 FCFA</span>
                                     </div>
                                 </div>
                             </BentoCard>

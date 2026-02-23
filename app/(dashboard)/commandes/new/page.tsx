@@ -167,7 +167,7 @@ export default function NewCommandePage() {
                             >
                                 <p className="font-black text-secondary text-sm leading-tight group-hover:text-primary transition-colors">{plat.libelle}</p>
                                 <p className="text-[10px] text-muted mt-1 font-bold uppercase">{plat.categorie?.libelle}</p>
-                                <p className="text-lg font-black text-primary mt-2">{Number(plat.prix_actuel).toFixed(2)} €</p>
+                                <p className="text-lg font-black text-primary mt-2">{Number(plat.prix_actuel).toFixed(2)} FCFA</p>
                             </button>
                         ))}
                         {filteredPlats.length === 0 && (
@@ -187,14 +187,14 @@ export default function NewCommandePage() {
                             <div className="space-y-1">
                                 <label className="text-[10px] font-black uppercase tracking-widest text-muted">Serveur *</label>
                                 <select required className="w-full p-4 bg-secondary/5 border border-secondary/10 rounded-2xl outline-none focus:border-primary font-bold text-secondary appearance-none" value={form.id_employe} onChange={e => setForm({ ...form, id_employe: e.target.value })}>
-                                    <option value="">— Sélectionner —</option>
+                                    <option value="">�?" Sélectionner �?"</option>
                                     {employes.map(e => <option key={e.id_employe} value={e.id_employe}>{e.prenom} {e.nom} ({e.role})</option>)}
                                 </select>
                             </div>
                             <div className="space-y-1">
                                 <label className="text-[10px] font-black uppercase tracking-widest text-muted">Client (optionnel)</label>
                                 <select className="w-full p-4 bg-secondary/5 border border-secondary/10 rounded-2xl outline-none focus:border-primary font-bold text-secondary appearance-none" value={form.id_client} onChange={e => setForm({ ...form, id_client: e.target.value })}>
-                                    <option value="">— Aucun client —</option>
+                                    <option value="">�?" Aucun client �?"</option>
                                     {clients.map(c => <option key={c.id_client} value={c.id_client}>{c.nom}</option>)}
                                 </select>
                             </div>
@@ -202,7 +202,7 @@ export default function NewCommandePage() {
                                 <label className="text-[10px] font-black uppercase tracking-widest text-muted">Type</label>
                                 <select className="w-full p-4 bg-secondary/5 border border-secondary/10 rounded-2xl outline-none focus:border-primary font-bold text-secondary appearance-none" value={form.type_cmd} onChange={e => setForm({ ...form, type_cmd: e.target.value })}>
                                     <option value="Sur place">Sur place</option>
-                                    <option value="À emporter">À emporter</option>
+                                    <option value="�? emporter">�? emporter</option>
                                 </select>
                             </div>
                         </div>
@@ -236,7 +236,7 @@ export default function NewCommandePage() {
                                                 <Plus className="w-3 h-3" />
                                             </button>
                                         </div>
-                                        <span className="font-black text-primary text-sm">{(item.price * item.quantity).toFixed(2)} €</span>
+                                        <span className="font-black text-primary text-sm">{(item.price * item.quantity).toFixed(2)} FCFA</span>
                                     </div>
                                     <input
                                         type="text"
@@ -253,7 +253,7 @@ export default function NewCommandePage() {
                             <div className="border-t border-secondary/10 pt-6">
                                 <div className="flex justify-between items-end mb-6">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-muted">Total</p>
-                                    <p className="text-3xl font-black text-secondary serif">{total.toFixed(2)} €</p>
+                                    <p className="text-3xl font-black text-secondary serif">{total.toFixed(2)} FCFA</p>
                                 </div>
                                 <button
                                     type="submit"

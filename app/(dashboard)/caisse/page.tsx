@@ -130,8 +130,8 @@ export default function CaissePage() {
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-2xl font-black text-secondary">{calculateTotal(order).toFixed(2)} €</p>
-                                        <p className="text-[9px] font-black text-muted uppercase tracking-widest">À régler</p>
+                                        <p className="text-2xl font-black text-secondary">{calculateTotal(order).toFixed(2)} FCFA</p>
+                                        <p className="text-[9px] font-black text-muted uppercase tracking-widest">�? régler</p>
                                     </div>
                                 </button>
                             ))
@@ -168,7 +168,7 @@ export default function CaissePage() {
                                                     <span className="font-black text-primary text-sm">{line.quantite}x</span>
                                                     <p className="font-bold text-secondary text-base">{line.plat?.libelle}</p>
                                                 </div>
-                                                <p className="font-black text-secondary">{(Number(line.prix_moment) * line.quantite).toFixed(2)} €</p>
+                                                <p className="font-black text-secondary">{(Number(line.prix_moment) * line.quantite).toFixed(2)} FCFA</p>
                                             </div>
                                         ))}
                                     </div>
@@ -177,15 +177,15 @@ export default function CaissePage() {
                                     <div className="pt-8 border-t border-secondary/5 space-y-6">
                                         <div className="flex justify-between items-end">
                                             <p className="text-[10px] font-black text-muted uppercase tracking-widest">Sous-total HT</p>
-                                            <p className="text-lg font-black text-secondary">{(calculateTotal(selectedOrder) / 1.1).toFixed(2)} €</p>
+                                            <p className="text-lg font-black text-secondary">{(calculateTotal(selectedOrder) / 1.1).toFixed(2)} FCFA</p>
                                         </div>
                                         <div className="flex justify-between items-end">
                                             <p className="text-[10px] font-black text-muted uppercase tracking-widest">TVA (10%)</p>
-                                            <p className="text-lg font-black text-secondary">{(calculateTotal(selectedOrder) * 0.1).toFixed(2)} €</p>
+                                            <p className="text-lg font-black text-secondary">{(calculateTotal(selectedOrder) * 0.1).toFixed(2)} FCFA</p>
                                         </div>
                                         <div className="flex justify-between items-end bg-primary/5 p-8 rounded-[32px]">
                                             <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Net à payer</p>
-                                            <p className="text-6xl font-black text-secondary tracking-tighter">{calculateTotal(selectedOrder).toFixed(2)} €</p>
+                                            <p className="text-6xl font-black text-secondary tracking-tighter">{calculateTotal(selectedOrder).toFixed(2)} FCFA</p>
                                         </div>
                                     </div>
 
@@ -203,7 +203,7 @@ export default function CaissePage() {
                                             </button>
                                             <button
                                                 disabled={isProcessing}
-                                                onClick={() => handlePayment("ESPÈCES")}
+                                                onClick={() => handlePayment("ESP�^CES")}
                                                 className="flex flex-col items-center gap-3 p-6 glass rounded-2xl hover:bg-secondary hover:text-white transition-all group"
                                             >
                                                 <Banknote className="w-6 h-6 text-primary group-hover:text-white transition-colors" />

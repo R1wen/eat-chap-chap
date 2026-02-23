@@ -32,8 +32,8 @@ export default function ProfilePage() {
                             <div className="space-y-1">
                                 <h2 className="text-5xl font-black italic serif tracking-tighter">Jean Dupont</h2>
                                 <div className="flex justify-center md:justify-start gap-4">
-                                    <p className="text-primary font-black uppercase tracking-[0.2em] text-xs">Membre Élite ★★★★☆</p>
-                                    <span className="text-white/40 text-xs">•</span>
+                                    <p className="text-primary font-black uppercase tracking-[0.2em] text-xs">Membre �?lite �~.�~.�~.�~.�~?</p>
+                                    <span className="text-white/40 text-xs">�?�</span>
                                     <p className="text-white/60 font-medium text-xs">A rejoint en Septembre 2024</p>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@ export default function ProfilePage() {
                                     <span className="text-[10px] font-black text-muted uppercase tracking-widest">Visites</span>
                                 </div>
                                 <div className="p-6 rounded-[24px] bg-secondary/5 border border-secondary/5 flex flex-col items-center">
-                                    <span className="text-2xl font-black text-secondary">250€</span>
+                                    <span className="text-2xl font-black text-secondary">250�,�</span>
                                     <span className="text-[10px] font-black text-muted uppercase tracking-widest">Dépensés</span>
                                 </div>
                             </div>
@@ -98,8 +98,8 @@ export default function ProfilePage() {
                                 ].map((res, i) => (
                                     <div key={i} className="flex justify-between items-center p-6 rounded-[24px] glass border-secondary/10 hover:border-primary/40 transition-all group cursor-pointer">
                                         <div className="space-y-1">
-                                            <h4 className="text-xl font-bold text-secondary italic serif">{res.date} • {res.time}</h4>
-                                            <p className="text-[10px] font-black text-muted uppercase tracking-widest">{res.guests} pers • {res.table}</p>
+                                            <h4 className="text-xl font-bold text-secondary italic serif">{res.date} �?� {res.time}</h4>
+                                            <p className="text-[10px] font-black text-muted uppercase tracking-widest">{res.guests} pers �?� {res.table}</p>
                                         </div>
                                         <div className="text-right">
                                             <span className={`text-[8px] font-black uppercase px-2 py-1 rounded-full ${res.status === 'Confirmé' ? 'bg-green-500/10 text-green-600' : 'bg-primary/10 text-primary'}`}>{res.status}</span>
@@ -116,16 +116,16 @@ export default function ProfilePage() {
                         <BentoCard title="Historique Gastronomique">
                             <div className="mt-4 space-y-2">
                                 {[
-                                    { id: "INV-9921", date: "12 Fév", plat: "Entrecôte 300g", price: "58.00 €", method: "CARTE" },
-                                    { id: "INV-9854", date: "08 Fév", plat: "Risotto aux Cèpes", price: "42.50 €", method: "CARTE" },
-                                    { id: "INV-9712", date: "24 Jan", plat: "Salade César", price: "31.00 €", method: "ESPÈCES" },
+                                    { id: "INV-9921", date: "12 Fév", plat: "Entrecôte 300g", price: "58.00 FCFA", method: "CARTE" },
+                                    { id: "INV-9854", date: "08 Fév", plat: "Risotto aux Cèpes", price: "42.50 FCFA", method: "CARTE" },
+                                    { id: "INV-9712", date: "24 Jan", plat: "Salade César", price: "31.00 FCFA", method: "ESP�^CES" },
                                 ].map((inv, i) => (
                                     <div key={i} className="flex items-center justify-between p-4 rounded-xl hover:bg-secondary/5 transition-all group cursor-pointer">
                                         <div className="flex items-center gap-6">
                                             <Receipt className="w-5 h-5 text-primary opacity-40" />
                                             <div>
                                                 <p className="text-sm font-bold text-secondary">{inv.plat}</p>
-                                                <p className="text-[10px] font-black text-muted uppercase tracking-tighter">{inv.date} • {inv.id}</p>
+                                                <p className="text-[10px] font-black text-muted uppercase tracking-tighter">{inv.date} �?� {inv.id}</p>
                                             </div>
                                         </div>
                                         <div className="text-right">

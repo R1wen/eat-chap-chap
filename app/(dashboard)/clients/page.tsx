@@ -19,6 +19,7 @@ import {
 
 export default function ClientsPage() {
     const [clients, setClients] = useState<any[]>([]);
+    const [monthReservations, setMonthReservations] = useState(0);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
@@ -36,9 +37,21 @@ export default function ClientsPage() {
 
     const fetchClients = async () => {
         try {
-            const res = await fetch("/api/clients");
-            const data = await res.json();
-            setClients(data);
+            const [cRes, rRes] = await Promise.all([
+                fetch("/api/clients"),
+                fetch("/api/reservations")
+            ]);
+            const cData = await cRes.json();
+            const rData = await rRes.json();
+            if (Array.isArray(cData)) setClients(cData);
+            if (Array.isArray(rData)) {
+                const now = new Date();
+                const monthCount = rData.filter((r: any) => {
+                    const d = new Date(r.date_heure);
+                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                }).length;
+                setMonthReservations(monthCount);
+            }
         } catch (error) {
             console.error("Failed to fetch clients", error);
         }
@@ -112,7 +125,7 @@ export default function ClientsPage() {
                             <div className="p-3 bg-secondary/5 rounded-xl text-secondary"><Calendar className="w-6 h-6" /></div>
                             <div>
                                 <p className="text-[10px] font-black text-muted uppercase tracking-widest">Réservations ce mois</p>
-                                <p className="text-2xl font-black text-secondary tracking-tighter">42</p>
+                                <p className="text-2xl font-black text-secondary tracking-tighter">{monthReservations}</p>
                             </div>
                         </div>
                     </BentoCard>
@@ -121,7 +134,9 @@ export default function ClientsPage() {
                             <div className="p-3 bg-white/10 rounded-xl"><History className="w-6 h-6" /></div>
                             <div>
                                 <p className="text-[10px] font-black opacity-60 uppercase tracking-widest">Taux de fidélité</p>
-                                <p className="text-2xl font-black tracking-tighter">68%</p>
+                                <p className="text-2xl font-black tracking-tighter">
+                                    {clients.length > 0 ? Math.round((clients.filter(c => (c._count?.reservations || 0) > 1).length / clients.length) * 100) : 0}%
+                                </p>
                             </div>
                         </div>
                     </BentoCard>

@@ -21,8 +21,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Eat Chap Chap | Terre Cuite Bistro",
-  description: "Authentic restaurant management with a warm touch.",
+  title: "To Eat Chap Chap | Gestion Restaurant",
+  description: "Système de gestion de restaurant To Eat Chap Chap.",
 };
 
 export default function RootLayout({

@@ -100,9 +100,9 @@ export default function NewReservationPage() {
                             value={form.id_client}
                             onChange={e => setForm({ ...form, id_client: e.target.value })}
                         >
-                            <option value="">— Sélectionner un client —</option>
+                            <option value="">�?" Sélectionner un client �?"</option>
                             {clients.map(c => (
-                                <option key={c.id_client} value={c.id_client}>{c.nom} {c.telephone ? `• ${c.telephone}` : ""}</option>
+                                <option key={c.id_client} value={c.id_client}>{c.nom} {c.telephone ? `�?� ${c.telephone}` : ""}</option>
                             ))}
                         </select>
                     </div>
@@ -144,9 +144,9 @@ export default function NewReservationPage() {
                                 value={form.id_table}
                                 onChange={e => setForm({ ...form, id_table: e.target.value })}
                             >
-                                <option value="">— Sans table assignée —</option>
+                                <option value="">�?" Sans table assignée �?"</option>
                                 {tables.map(t => (
-                                    <option key={t.id_table} value={t.id_table}>Table {t.numero} • {t.capacite} pers. {t.zone ? `• ${t.zone}` : ""}</option>
+                                    <option key={t.id_table} value={t.id_table}>Table {t.numero} �?� {t.capacite} pers. {t.zone ? `�?� ${t.zone}` : ""}</option>
                                 ))}
                             </select>
                         </div>
