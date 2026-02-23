@@ -51,8 +51,8 @@ export async function GET() {
             date.setDate(date.getDate() - (6 - i));
             const dayStr = date.toLocaleDateString('fr-FR', { weekday: 'short' });
             const dayTotal = payments
-                .filter(p => new Date(p.date_paiement).toDateString() === date.toDateString())
-                .reduce((acc, curr) => acc + Number(curr.montant), 0);
+                .filter((p: (typeof payments)[number]) => new Date(p.date_paiement).toDateString() === date.toDateString())
+                .reduce((acc: number, curr: (typeof payments)[number]) => acc + Number(curr.montant), 0);
             return { day: dayStr, total: dayTotal };
         });
 
