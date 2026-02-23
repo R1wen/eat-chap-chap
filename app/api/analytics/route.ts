@@ -34,13 +34,13 @@ export async function GET() {
         // Simple transformation for operational efficiency
         const stats = {
             totalRevenue: Number(totalRevenue._sum.montant || 0),
-            topPlats: topPlats.map(p => ({
+            topPlats: topPlats.map((p: (typeof topPlats)[number]) => ({
                 libelle: p.libelle,
                 count: p._count.lignes_cmd
             })),
-            revenueByCategory: revenueByCat.map(c => ({
+            revenueByCategory: revenueByCat.map((c: (typeof revenueByCat)[number]) => ({
                 category: c.libelle,
-                revenue: c.plats.reduce((acc, p) => acc + p.lignes_cmd.reduce((lAcc, l) => lAcc + Number(l.prix_moment) * l.quantite, 0), 0)
+                revenue: c.plats.reduce((acc: number, p: (typeof c.plats)[number]) => acc + p.lignes_cmd.reduce((lAcc: number, l: (typeof p.lignes_cmd)[number]) => lAcc + Number(l.prix_moment) * l.quantite, 0), 0)
             }))
         };
 
