@@ -1,13 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
 export async function GET(
-    req: Request,
-    { params }: { params: { id: string } }
+    request: NextRequest,
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await context.params;
         const commande = await prisma.commande.findUnique({
-            where: { id_commande: parseInt(params.id) },
+            where: { id_commande: parseInt(id) },
             include: {
                 lignes: { include: { plat: true } },
                 tables: true,
@@ -23,15 +24,16 @@ export async function GET(
 }
 
 export async function PUT(
-    req: Request,
-    { params }: { params: { id: string } }
+    request: NextRequest,
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
-        const body = await req.json();
+        const { id } = await context.params;
+        const body = await request.json();
         const { statut_cuisine } = body;
 
         const commande = await prisma.commande.update({
-            where: { id_commande: parseInt(params.id) },
+            where: { id_commande: parseInt(id) },
             data: { statut_cuisine },
         });
 

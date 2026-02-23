@@ -3,19 +3,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
-export default function TicketPrintPage() {
-    const params = useParams();
+export default function TicketPrintPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
     const [order, setOrder] = useState<any>(null);
 
     useEffect(() => {
-        fetch(`/api/commandes/${params.id}`)
+        fetch(`/api/commandes/${id}`)
             .then(res => res.json())
             .then(data => {
                 setOrder(data);
                 // Trigger print once data is loaded
                 setTimeout(() => window.print(), 500);
             });
-    }, [params.id]);
+    }, [id]);
 
     if (!order) return <div className="p-10 text-center font-mono">Chargement du ticket...</div>;
 

@@ -1,12 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
+        const { id } = await context.params;
         const plat = await prisma.plat.findUnique({
-            where: { id_plat: Number(params.id) },
+            where: { id_plat: Number(id) },
             include: { categorie: true }
         });
         if (!plat) return NextResponse.json({ error: "Plat not found" }, { status: 404 });
@@ -18,11 +19,12 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
-        const body = await req.json();
+        const { id } = await context.params;
+        const body = await request.json();
         const plat = await prisma.plat.update({
-            where: { id_plat: Number(params.id) },
+            where: { id_plat: Number(id) },
             data: body
         });
         return NextResponse.json(plat);
@@ -33,10 +35,11 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
+        const { id } = await context.params;
         await prisma.plat.delete({
-            where: { id_plat: Number(params.id) }
+            where: { id_plat: Number(id) }
         });
         return NextResponse.json({ success: true });
     } catch (error: any) {

@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function ClientOrderPage() {
-    const params = useParams();
-    const tableId = params.tableId || "4"; // Default for mockup if no ID
+export default function ClientOrderPage({ params }: { params: Promise<{ tableId: string }> }) {
+    const { tableId: rawTableId } = React.use(params);
+    const tableId = rawTableId || "4"; // Default for mockup if no ID
 
     const [menu, setMenu] = useState<any[]>([]);
     const [activeCat, setActiveCat] = useState<string>("Tous");

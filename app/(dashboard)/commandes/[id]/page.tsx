@@ -20,19 +20,19 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function OrderDetailPage() {
-    const params = useParams();
+export default function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
     const router = useRouter();
     const [order, setOrder] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchOrder();
-    }, [params.id]);
+    }, [id]);
 
     const fetchOrder = async () => {
         try {
-            const res = await fetch(`/api/commandes/${params.id}`);
+            const res = await fetch(`/api/commandes/${id}`);
             const data = await res.json();
             setOrder(data);
         } catch (error) {
@@ -43,7 +43,7 @@ export default function OrderDetailPage() {
 
     const updateKitchenStatus = async (status: string) => {
         try {
-            await fetch(`/api/commandes/${params.id}`, {
+            await fetch(`/api/commandes/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ statut_cuisine: status })

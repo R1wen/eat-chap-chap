@@ -30,7 +30,9 @@ export default function Header() {
                     { label: "Dashboard", href: "/" },
                     { label: "Tables", href: "/admin/tables" },
                     { label: "Réservations", href: "/admin/reservations" },
-                    { label: "POS", href: "/pos" }
+                    { label: "Menu", href: "/menu" },
+                    { label: "Clients", href: "/clients" },
+                    { label: "POS", href: "/caisse" }
                 ].map((item) => (
                     <a
                         key={item.label}

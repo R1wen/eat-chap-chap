@@ -10,6 +10,7 @@ import {
   ShoppingBag,
   TrendingUp,
   Clock,
+  Calendar,
   ArrowRight,
   ChevronRight,
   Plus,
@@ -99,7 +100,7 @@ export default function Dashboard() {
           <BentoCard className="flex flex-col justify-between py-8">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-2xl bg-secondary/10 text-secondary">
-                <ShoppingCart className="w-6 h-6" />
+                <ShoppingBag className="w-6 h-6" />
               </div>
               <p className="text-[10px] font-black text-muted uppercase tracking-widest">Commandes Actives</p>
             </div>

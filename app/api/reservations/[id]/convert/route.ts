@@ -1,11 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
-        const resId = Number(params.id);
+        const { id } = await context.params;
+        const resId = Number(id);
 
         // 1. Fetch reservation with tables
         const reservation = await prisma.reservation.findUnique({

@@ -20,19 +20,19 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function ReservationDetailPage() {
-    const params = useParams();
+export default function ReservationDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
     const router = useRouter();
     const [reservation, setReservation] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchReservation();
-    }, [params.id]);
+    }, [id]);
 
     const fetchReservation = async () => {
         try {
-            const res = await fetch(`/api/reservations/${params.id}`);
+            const res = await fetch(`/api/reservations/${id}`);
             const data = await res.json();
             setReservation(data);
         } catch (error) {
@@ -43,7 +43,7 @@ export default function ReservationDetailPage() {
 
     const updateStatus = async (status: string) => {
         try {
-            await fetch(`/api/reservations/${params.id}`, {
+            await fetch(`/api/reservations/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ statut: status })

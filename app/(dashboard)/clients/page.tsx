@@ -53,14 +53,17 @@ export default function ClientsPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
+            const data = await res.json();
             if (res.ok) {
-                const newClient = await res.json();
-                setClients([newClient, ...clients]);
+                setClients([data, ...clients]);
                 setShowAddModal(false);
                 setFormData({ nom: "", telephone: "", email: "" });
+            } else {
+                alert(`Erreur: ${data.error} - ${data.details || ''}`);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Creation failed", error);
+            alert("Une erreur critique est survenue lors de la création.");
         }
     };
 
@@ -87,7 +90,7 @@ export default function ClientsPage() {
 
                     <button
                         onClick={() => setShowAddModal(true)}
-                        className="flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30"
+                        className="relative z-10 flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 cursor-pointer"
                     >
                         <UserPlus className="w-5 h-5" /> Nouveau Client
                     </button>
@@ -181,58 +184,71 @@ export default function ClientsPage() {
 
             {/* Add Modal */}
             {showAddModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-0">
-                    <div className="absolute inset-0 bg-secondary/80 backdrop-blur-md" onClick={() => setShowAddModal(false)} />
-                    <BentoCard className="relative w-full max-w-lg !p-10 border-none shadow-2xl bg-white animate-in zoom-in-95 duration-300">
-                        <button onClick={() => setShowAddModal(false)} className="absolute top-6 right-6 text-muted hover:text-secondary"><X /></button>
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-6 sm:p-0">
+                    <div
+                        className="absolute inset-0 bg-secondary/80 backdrop-blur-md cursor-pointer z-0"
+                        onClick={() => setShowAddModal(false)}
+                    />
+                    <div className="relative w-full max-w-lg z-50" onClick={e => e.stopPropagation()}>
+                        <BentoCard className="!p-10 border-none shadow-2xl bg-white animate-in zoom-in-95 duration-300">
+                            <button
+                                onClick={() => setShowAddModal(false)}
+                                className="absolute top-6 right-6 text-muted hover:text-secondary p-2 z-20"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
 
-                        <div className="space-y-8">
-                            <div className="space-y-2">
-                                <h3 className="text-3xl font-black text-secondary serif italic tracking-tighter">Nouveau Client</h3>
-                                <p className="text-xs font-medium text-muted uppercase tracking-widest">Enregistrement dans la base</p>
-                            </div>
-
-                            <form onSubmit={handleCreateClient} className="space-y-6">
+                            <div className="space-y-8">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-muted">Nom Complet</label>
-                                    <input
-                                        required
-                                        type="text"
-                                        className="w-full p-4 bg-secondary/5 border-none rounded-xl font-bold text-secondary outline-none focus:ring-2 ring-primary"
-                                        value={formData.nom}
-                                        onChange={e => setFormData({ ...formData, nom: e.target.value })}
-                                        placeholder="Ex: Jean Dupont"
-                                    />
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-muted">Téléphone</label>
-                                        <input
-                                            type="tel"
-                                            className="w-full p-4 bg-secondary/5 border-none rounded-xl font-bold text-secondary outline-none focus:ring-2 ring-primary"
-                                            value={formData.telephone}
-                                            onChange={e => setFormData({ ...formData, telephone: e.target.value })}
-                                            placeholder="06..."
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-muted">Email</label>
-                                        <input
-                                            type="email"
-                                            className="w-full p-4 bg-secondary/5 border-none rounded-xl font-bold text-secondary outline-none focus:ring-2 ring-primary"
-                                            value={formData.email}
-                                            onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                            placeholder="jean@mail.com"
-                                        />
-                                    </div>
+                                    <h3 className="text-3xl font-black text-secondary serif italic tracking-tighter">Nouveau Client</h3>
+                                    <p className="text-xs font-medium text-muted uppercase tracking-widest">Enregistrement dans la base</p>
                                 </div>
 
-                                <button type="submit" className="w-full py-6 bg-primary text-white rounded-[24px] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
-                                    <CheckCircle2 className="w-5 h-5" /> Créer la Fiche
-                                </button>
-                            </form>
-                        </div>
-                    </BentoCard>
+                                <form onSubmit={handleCreateClient} className="space-y-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-muted">Nom Complet</label>
+                                        <input
+                                            required
+                                            type="text"
+                                            className="w-full p-4 bg-secondary/5 border-none rounded-xl font-bold text-secondary outline-none focus:ring-2 ring-primary"
+                                            value={formData.nom}
+                                            onChange={e => setFormData({ ...formData, nom: e.target.value })}
+                                            placeholder="Ex: Jean Dupont"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-muted">Téléphone</label>
+                                            <input
+                                                type="tel"
+                                                className="w-full p-4 bg-secondary/5 border-none rounded-xl font-bold text-secondary outline-none focus:ring-2 ring-primary"
+                                                value={formData.telephone}
+                                                onChange={e => setFormData({ ...formData, telephone: e.target.value })}
+                                                placeholder="06..."
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-muted">Email</label>
+                                            <input
+                                                type="email"
+                                                className="w-full p-4 bg-secondary/5 border-none rounded-xl font-bold text-secondary outline-none focus:ring-2 ring-primary"
+                                                value={formData.email}
+                                                onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                                placeholder="jean@mail.com"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="w-full py-6 bg-primary text-white rounded-[24px] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer"
+                                    >
+                                        <CheckCircle2 className="w-5 h-5" /> Créer la Fiche
+                                    </button>
+                                </form>
+                            </div>
+                        </BentoCard>
+                    </div>
                 </div>
             )}
         </main>
